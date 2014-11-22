@@ -1,0 +1,310 @@
+
+	<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/loose.dtd" ><html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+				<link rel="alternate" href="rss.php" title="Ertir RSS feed" type="application/rss+xml" />
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="keywords" content="Ertir, pikirler, turkmenler, turkmenistan, ashgabat, social site" />
+		<meta name="description" content="Ertir - Betinden hem gytyndan" />
+		<meta name="verify-v1" content="2yAuU7srExoA1XZlQ+J32KzFW5TmYQKUcNlP56AV5jU=" />
+		<meta name="google" value="notranslate">
+		<link rel="icon" href="images/favicon.ico" type="image/x-icon">
+		<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+		<link rel="stylesheet" href="style.css?v=25"><title>Ertir - Türkmenistanyň iň uly internet portaly.</title>		<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+						<link type="text/css" rel="stylesheet" id="arrowchat_css" media="all" href="/projects/arrowchat/arrowchat.css" charset="utf-8" />
+				<script type="text/javascript" src="js/hashchange.js?v=3"></script>	
+				<script type="text/javascript" src="js/jquery.nicescroll.min.js"></script>
+				<script type="text/javascript" src="js/splitter.js"></script>
+				<script type="text/javascript" src="js/sidebar.js?version=10"></script>
+				<script src="nicEditor/nicEdit.js" type="text/javascript"></script>
+				<script src="js/blog.js?v=11"></script>
+						<link href="player/skin/blue.monday/jplayer.blue.monday.css" rel="stylesheet" type="text/css" />
+		<script src="js/jquery.autosize.min.js"></script>
+		<script src="js/messages_touch.js?v=10"></script>
+		<script src="js/socket.js?v=11"></script>
+		<link rel="stylesheet" href="jfu/css/jquery.fileupload-ui.css">
+		<!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
+		<script src="jfu/js/vendor/jquery.ui.widget.js"></script>
+		<!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
+		<script src="jfu/js/jquery.iframe-transport.js"></script>
+		<!-- The basic File Upload plugin -->
+		<script src="jfu/js/jquery.fileupload.js"></script>
+		<script type="text/javascript" src="js/lightbox.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/lightbox.css" media="screen" />
+		<script src="js/common.js?v=4"></script>
+		
+		<script src="js/jquery.carousel.js"></script>
+		
+		<script>
+			
+								function chatWith(id)
+					{
+						$("#arrowchat_userlist_"+id).trigger("click");
+					}
+								
+			function interval_loadings()
+			{
+				last_id = $(".last_comments li").attr("last");
+				
+				$.ajax({
+					dataType: "html",
+					type: "GET",
+					url: "elive/interval.php?id="+last_id,
+					cache: true,
+					success: function(html){
+						
+						$("#temp_interval").html(html);
+						
+														//last_comments
+								htmlc = $("#temp_interval").find("#last_comments_div").html();
+								
+								if(htmlc != "")
+								{
+									$(".last_comments").prepend(htmlc);
+									$(".last_comments_temp").html(htmlc);
+									
+									lisize = $(".last_comments_temp > li").size();
+									$('.last_comments > li').slice(-lisize).remove();
+									$(".last_comments_temp").html("");
+								}
+														if($("#notifications").find("#icons_a").html())
+						{
+							//notification bar
+							htmln = $("#temp_interval").find("#notification_interval #icons_a").html();
+							$("#notifications #icons_a").html(htmln);
+							
+							if($("#notifications .sh_m_box").html())
+							{
+								//alert("goymaly dal");
+							} else {
+								//alert("goymaly");
+								htmln = $("#temp_interval").find("#notification_interval #sh_m_html").html();
+								$("#notifications #sh_m_html").html(htmln);
+							}
+							
+						} else {
+							//notification bar
+							htmln = $("#temp_interval").find("#notification_interval").html();
+							$("#notifications").html(htmln);
+						}
+						
+														//dereje bar
+								htmln = $("#temp_interval").find(".dereje_interval").html();
+								$(".dereje").html(htmln);
+						
+								//sidebarpanel bar
+								htmln = $("#temp_interval").find("#section_interval_1").html();
+								$("#section_1").html(htmln);
+								htmln = $("#temp_interval").find("#section_interval_2").html();
+								$("#section_2").html(htmln);
+								
+								if($(".bar_notification_button").find("img").attr("src") == "images/user_bar/notifications-bar-red.png" || $(".bar_message_button").find("img").attr("src") == "images/user_bar/messages-bar-red.png" || $(".bar_friend_button").find("img").attr("src") == "images/user_bar/friend-bar-red.png")
+								{
+									var link = document.createElement('link');
+									link.type = 'image/x-icon';
+									link.rel = 'shortcut icon';
+									link.href = 'http://www.ertir.com/images/favicon-new.ico';
+									$('head').append(link);
+								} else {
+									var link = document.createElement('link');
+									link.type = 'image/x-icon';
+									link.rel = 'shortcut icon';
+									link.href = 'http://www.ertir.com/images/favicon.ico';
+									$('head').append(link);
+
+								}
+														
+						$("#temp_interval").html("");
+					}
+				});	
+			}
+		
+			interval_loadings();
+		
+			$(document).ready(function(){
+				
+				$(".sidebar-collapse").click(function(){
+					$(this).parent().find(".hide").toggle(200);
+				});
+				
+				//change favicon to default
+				var link = document.createElement('link');
+				link.type = 'image/x-icon';
+				link.rel = 'shortcut icon';
+				link.href = 'http://www.ertir.com/images/favicon.ico';
+				$('head').append(link);
+				
+				// hide #back-top first
+				$("#back-top").hide();
+				
+				// scroll body to 0px on click
+				$('#back-top a').live("click",function () {
+					$('body,html').animate({
+						scrollTop: 0
+					}, 200);
+					return false;
+				});
+				
+				var refreshId = setInterval(interval_loadings, 30000);						$(".content,.sidebar-left,#friend_bar,#messages_bar,#notifications_bar").live("click",function(){
+							$("#friend_bar").slideUp(0);
+							$("#messages_bar").slideUp(0);
+							$("#notifications_bar").slideUp(0);
+						});
+										$(".bar_friend_button").live("click",function(){
+					$("#friend_bar").slideToggle(0);
+					$("#messages_bar").hide();
+					$("#notifications_bar").hide();
+					$(".ertir_player").addClass("invisible");
+				});
+				
+				$(".bar_message_button").live("click",function(){
+					$("#messages_bar").load("elive/message_list.php");
+					$("#messages_bar").slideToggle(0);
+					$("#friend_bar").hide();
+					$("#notifications_bar").hide();
+					$(".ertir_player").addClass("invisible");
+				});
+				
+				$(".bar_notification_button").live("click",function(){
+					$("#notifications_bar").load("elive/history_list.php");
+					$("#notifications_bar").slideToggle(0);
+					$(".ertir_player").addClass("invisible");
+					
+					$(this).find("img").attr("src","images/user_bar/notifications-bar.png");					$("#friend_bar").hide();
+					$("#messages_bar").hide();
+				});
+			
+			});
+		
+		</script>
+		
+			</head>
+	<body>
+						<div id="showblog_shadow"></div>
+				<div id="showblog" class="showblog">
+					<div id="showblog_content">
+						<div class="blog_prev"></div>
+						<div class="content"></div>
+						<div class="blog_next"></div>
+						<div class="clear"></div>
+					</div>
+				</div>
+						<div id="blink" style="height:0px; width:0px;"></div>
+		<div id="temp_interval" style="display:none;"></div>
+		<div class="header">
+			<div id="loader" style="position:fixed; top:0px; left:45%; display:none; background:white; padding:10px;"><img src="images/loading.gif"></div>
+			<div class="wrapper">
+				<a href="index.php" style="float:left;">ERTIR</a>
+										<span style="float:center; margin-center:172px;">Täzeliklerden iň birinji siz habarly boluň   </span>
+						<span><a href='#register.php?register=true' style='background:yellow; color:black; padding:6px; font-weight:bold;'>Registrasiýa</a></span>				<div class="clear"></div>
+			</div>
+		</div>
+		<div class="user_bar" >
+			<div class="wrapper">
+										<script>
+							$(document).ready(function(){
+								$("input[name='query']").live("keydown",function(e){ 
+									if(e.keyCode == 13) { 
+										query = $(this).val();
+										location.hash="search.php?type=blogs&query="+query;
+										return false; 
+									} 
+								});
+							});
+						</script>
+						<input type="text" name="query" class="search_query_header" placeholder="Gözle..." >
+												<style>
+							.user_bar_fixed {
+								display: none !important;
+							}
+						</style>
+						<form method="POST" action="">
+							<input type="text" name="username" placeholder="Agza ady" style="margin-left:5px;">
+							<input type="password" name="password" placeholder="Açar söz" style="margin-left:5px;">
+							<input type="submit" value="Içeri gir" name="login" class="button" style="margin-left:5px; margin-top:-1px;">
+							<a href="#forget.php?forget=1" style="color:white; margin-left:5px; font-size:11px;">Unutdym.</a>
+						</form>
+										<div class="clear"></div>
+			</div>
+		</div>
+		<div class="wrapper">
+			
+			<p id="back-top"><a href="#top"><span></span>Ýokaryk</a></p>			
+			<div class="sidebar-left">
+				
+										<h2>Umumy</h2>
+						<ul>
+							<li style="display:none;"><a href="#ertir.php?type=top"><img src="images/favicon.ico" style="width:15px;">Baş sahypa</a></li>
+							<li><a href="#main.php?cid=0&type=top"><img src="images/sidebar-new/home.png">Baş sahypa</a></li>
+							<li><a href="#microblog.php?type=all"><img src="images/sidebar-new/pikirler.png">Pikirler</a></li>
+							<li><a href="#ertir.php?type=all"><img src="images/sidebar-new/news.png">Habarlar</a></li>
+														<li><a href="#books.php?type=all"><img src="images/sidebar-new/books.png" style="width:18px;">Kitaphana</a></li>
+							<li><a href="#bildirishler.php?type=all"><img src="images/sidebar-new/announce.png" style="width:18px;">Bildirişler</a></li>
+							
+							<li class="hide"><a href="#games.php?type=all"><img src="images/sidebar-new/games.png" style="width:18px;">Oýunlar</a></li>
+							
+														<li class="hide"><a href="#medallar.php?type=all"><img src="images/sidebar-new/medal.png">Medallar</a></li>
+							<li class="hide"><a href="#user_list.php?sort=gold"><img src="images/sidebar-new/users.png">Agzalar</a></li>
+														<li class="sidebar-collapse">...</li>
+						</ul>
+													<h2 style="margin-top:-10px;">Toparlar</h2>
+							<ul>
+								<li><a href="http://altygarly.ertir.com/" target="_blank"><img src="http://ertir.com/images/thumb.php?q=100&src=groups/2013_09_02_07_00_08150120_313097048763960_2025214181_n.jpg.jpg&w=32&h=32">Alty Garly</a></li>
+								<li><a href="http://news.ertir.com/" target="_blank"><img src="http://ertir.com/images/thumb.php?q=100&src=groups/2013_08_30_09_57_20tazenesil.png.jpg&w=32&h=32">Täze Nesil</a></li>
+								<li><a href="http://wepa.ertir.com/" target="_blank"><img src="http://ertir.com/images/thumb.php?q=100&src=groups/2013_09_03_01_47_24%D0%91%D0%B5%D0%B7%20%D0%B8%D0%BC%D0%B5%D0%BD%D0%B8-1.jpg.jpg&w=32&h=32">Kompýuter sapaklary</a></li>
+								<li><a href="http://telekeci.ertir.com/" target="_blank"><img src="http://ertir.com/images/thumb.php?q=100&src=groups/2013_04_23_03_33_42ceo.jpg.jpg&w=32&h=32">Ertiriň Telekeçileri</a></li>
+								<li><a href="http://android.ertir.com/" target="_blank"><img src="https://cdn2.iconfinder.com/data/icons/metro-ui-dock/128/OS_Android.png">Android</a></li>
+								<li><a href="http://about.ertir.com/" target="_blank"><img src="http://ertir.com/images/thumb.php?q=100&src=groups/2013_08_30_05_17_55Screen%20Shot%202013-08-13%20at%201.18.50%20PM.png.jpg&w=32&h=32">Ertir</a></li>
+							</ul>
+												<div class="clear"></div>
+					<div class="messages-sidebar"></div>
+					<h2>Soňky jogaplar</h2>
+<div class="last_comments_temp" style="display:none;"></div>
+<div class="touch_bar">
+<ul class="last_comments">
+	<li last='1984234'><a href='javascript:' class='show_blog_link' link='blog.php?view=100360&scroll=1984234' title='Bir talybyń professory masgara ediśi'>myrat-marly:<br><i>men vk.comda orscasyny okapdym...</i></a></li><li last='1984233'><a href='javascript:' class='show_blog_link' link='blog.php?view=100354&scroll=1984233' title='Kuran'>chishik:<br><i>Gudrat dagy dal.
+2014-in ahyry...</i></a></li><li last='1984232'><a href='javascript:' class='show_blog_link' link='blog.php?view=100376&scroll=1984232' title='Jennet diýip...'>Derwüş:<br><i>Sen bulaşdyryp otyrsyň!...</i></a></li><li last='1984231'><a href='javascript:' class='show_blog_link' link='blog.php?view=100356&scroll=1984231' title='Siber wirusy android ulanyjylaryna howp salýar.'>Aladaly:<br><i>Ol eşekde ýüküm ýok, ýykylsa h...</i></a></li><li last='1984230'><a href='javascript:' class='show_blog_link' link='blog.php?view=100366&scroll=1984230' title='Tomash Rosiski &amp; Alberto Jilardino(köýüp giden talantlar(Part 5) '>-=@- BBC -@=-:<br><i>Real Madrid:-)...</i></a></li><li last='1984229'><a href='javascript:' class='show_blog_link' link='blog.php?view=100365&scroll=1984229' title='MEN DÜNÝÄNI DÜZETJEKDIM... '>-=@- BBC -@=-:<br><i>Dostjan malades tapyp bilipsin...</i></a></li></ul>
+</div><script>
+	$(document).ready(function(){
+		$("#cat_show").click(function(){
+			$("#cat_list").slideToggle(200);
+		});
+	});
+</script>
+<h2 id="cat_show" style="cursor:pointer; cursor:hand;">Bölümler</h2>
+<ul id="cat_list" style="display:none;">
+<li><a href='#main.php?cid=1&type=top'><img src='images/blogs.png'> Umumy gürrüňdeşlik</a></li><li><a href='#main.php?cid=2&type=top'><img src='images/blogs.png'> Söýgi</a></li><li><a href='#main.php?cid=3&type=top'><img src='images/blogs.png'> Edebiýat</a></li><li><a href='#main.php?cid=4&type=top'><img src='images/blogs.png'> Täzelikler</a></li><li><a href='#main.php?cid=5&type=top'><img src='images/blogs.png'> Tehnologiýa</a></li><li><a href='#main.php?cid=6&type=top'><img src='images/blogs.png'> Okuw</a></li><li><a href='#main.php?cid=7&type=top'><img src='images/blogs.png'> Sport</a></li><li><a href='#main.php?cid=8&type=top'><img src='images/blogs.png'> Degişme</a></li><li><a href='#main.php?cid=9&type=top'><img src='images/blogs.png'> Gyzykly maglumatlar</a></li><li><a href='#main.php?cid=10&type=top'><img src='images/blogs.png'> Kömek gerek</a></li><li><a href='#main.php?cid=11&type=top'><img src='images/blogs.png'> Saglyk</a></li><li><a href='#main.php?cid=12&type=top'><img src='images/blogs.png'> Dini ynançlar</a></li><li><a href='#main.php?cid=13&type=top'><img src='images/blogs.png'> Online sapaklar</a></li><li><a href='#main.php?cid=14&type=top'><img src='images/blogs.png'> Söhbetdeşlikler</a></li><li><a href='#main.php?cid=15&type=top'><img src='images/blogs.png'> Syýahat</a></li><li><a href='#main.php?cid=16&type=top'><img src='images/blogs.png'> Biznes we telekeçilik</a></li><li><a href='#main.php?cid=17&type=top'><img src='images/blogs.png'> Bildirişler</a></li><li><a href='#main.php?cid=18&type=top'><img src='images/blogs.png'> Taryh</a></li></ul>				
+			</div>
+			<div class="content" id="content"></div>
+		</div>
+		<div class="clear"></div>
+		<div class="wrapper footer">
+			Ertir. Copyright &copy; 2009-2014. Ähli Hukuklary Goragly. <br>Powered by Guvanch Sopiyev
+		</div>
+						<div id="rpnl_wrapper">
+					<div id="rpnl_handle"></div> 
+					<div id="rpnl_main">
+						<div class="rpnl_section" id="section_1"></div>
+						<div class="rpnl_section" id="section_2"></div>
+					</div>
+					<div class="clear"></div>
+				</div>
+					</body>
+</html>
+<script type="text/javascript" src="player/js/jquery.jplayer.min.js"></script>
+<script type="text/javascript" src="player/js/jplayer.playlist.min.js"></script>
+<script type="text/javascript" src="js/player.js?v=5"></script>
+		<script type="text/javascript" src="/projects/arrowchat/external.php?type=djs" charset="utf-8"></script>
+		<script type="text/javascript" src="/js/arrowchat.js" charset="utf-8"></script>
+		<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+	
+	var pageTracker = _gat._getTracker("UA-25492294-1");
+	pageTracker._setCustomVar(1,"","",2); 
+	pageTracker._trackPageview();
+
+} catch(err) {}</script>
+		
